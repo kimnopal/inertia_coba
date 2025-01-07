@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Post() {
+export default function Post({ posts }) {
   return (
     <div class="row-xl" style={{ padding: '10px' }}>
       <div class="col-md-12">
@@ -11,7 +11,7 @@ export default function Post() {
           </div>
 
           <div class="card-body">
-            <a href="{{ route('posts.create') }}" class="btn btn-md btn-success">Tambah Data Post</a>
+            <a href={route('posts.create')} class="btn btn-md btn-success">Tambah Data Post</a>
             <hr />
             <div class="table-responsive">
               <div class="mb-3">
@@ -22,39 +22,39 @@ export default function Post() {
                   <tr>
                     <th scope="col">Image</th>
                     <th scope="col">
-                      {/* <a href="#" wire:click.prevent="sortBy('title')">Title</a>
-                                    @if ($sortField === 'title')
+                      <a href="#">Title</a>
+                      {/* @if ($sortField === 'title')
                                     <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                                     @endif */}
                     </th>
                     <th scope="col">
-                      {/* <a href="#" wire:click.prevent="sortBy('content')">Content</a>
-                                    @if ($sortField === 'content')
-                                    <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                                    @endif */}
+                      <a href="#">Content</a>
+                      {/* // @if ($sortField === 'content')
+                                    // <span>{{ $sortDirection === 'asc' ? '↑' : '↓'}}</span>
+                                    // @endif */}
                     </th>
                     <th scope="col" style={{ width: '20%' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @forelse ($posts as $post)
-                  <tr>
-                    <td class="text-center">
-                      <img src="{{ asset('/storage/posts/' . $post->image) }}" class="rounded" style={{ width: '150px' }} />
-                    </td>
-                    <td>{'{ $post->title }'}</td>
-                    <td>{'!! $post->content !!'}</td>
-                    <td class="text-center">
-                      <a href="{{ route('posts.show', $post->id) }}" wire:navigate class="btn btn-sm btn-success">Lihat</a>
-                      <a href="{{ route('posts.edit', $post->id) }}" wire:navigate class="btn btn-sm btn-primary">Edit</a>
-                      <button class="btn btn-sm btn-danger" wire:click="confirmDelete({{ $post->id }})">Delete</button>
-                    </td>
-                  </tr>
-                  @empty
-                  <div class="alert alert-danger">
-                    Data Post belum Tersedia.
-                  </div>
-                  @endforelse
+                  {posts ? posts.map(post => (
+                    <tr>
+                      <td class="text-center">
+                        <img src="" class="rounded" style={{ width: '150px' }} />
+                      </td>
+                      <td>{post.title}</td>
+                      <td>{post.content}</td>
+                      <td class="text-center">
+                        <a href="{{ route('posts.show', $post->id) }}" wire:navigate class="btn btn-sm btn-success">Lihat</a>
+                        <a href="{{ route('posts.edit', $post->id) }}" wire:navigate class="btn btn-sm btn-primary">Edit</a>
+                        <button class="btn btn-sm btn-danger" wire:click="confirmDelete({{ $post->id }})">Delete</button>
+                      </td>
+                    </tr>
+                  )) : (
+                    <div class="alert alert-danger">
+                      Data Post belum Tersedia.
+                    </div>
+                  )}
                 </tbody>
               </table>
               {/* {{ $posts->links() }} */}
